@@ -1,7 +1,7 @@
 import {useState} from 'react';
 import ProductForm from './ProductForm.jsx';
 import ProductList from './ProductList';
-
+import '../styles/intentario-style.css';
 
 function Inventario() {
   const [products, setProducts] = useState([]);

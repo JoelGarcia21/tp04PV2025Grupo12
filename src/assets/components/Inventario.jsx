@@ -2,9 +2,11 @@ import {useState, useEffect} from 'react';
 import ProductForm from './ProductForm.jsx';
 import ProductList from './ProductList';
 import '../styles/intentario-style.css';
+import SearchBar from './SearchBar.jsx';
 
 function Inventario() {
   const [products, setProducts] = useState([]);
+  const [filteredProducts, setFilteredProducts] = useState([]);
   
   const addProduct = (newProduct) => {
     setProducts([...products, { ...newProduct, id: Date.now() }]);
@@ -60,8 +62,13 @@ function Inventario() {
       <ProductForm
         onAddProduct={addProduct}
       />
+      <SearchBar
+        allProducts={products}
+        onResults={setFilteredProducts}
+      />
       <ProductList
-        products={products}
+        products={filteredProducts}        
+        // products={products} // codigo anterior
       />
     </div>
   );

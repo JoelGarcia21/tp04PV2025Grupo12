@@ -2,17 +2,19 @@ import { useState } from 'react';
 
 const ProductForm = ({ onAddProduct }) => {
   const [product, setProduct] = useState({
-    descripcion: '',
+    nombre: '',
+    marca: '',
     precioUnitario: 0,
     descuento: 0,
-    stock: 0
+    stock: 0,
+    disponible: true,
   });
 
   const handleChange = (e) => {
     const { name, value } = e.target;
     setProduct({
       ...product,
-      [name]: name === 'descripcion' ? value : Number(value)
+      [name]: (name === 'nombre' || name === 'marca')  ? value : Number(value)
     });
   };
 
@@ -28,10 +30,12 @@ const ProductForm = ({ onAddProduct }) => {
 
     // Resetear formulario
     setProduct({
-      descripcion: '',
+      nombre: '',
+      marca: '',
       precioUnitario: 0,
       descuento: 0,
-      stock: 0
+      stock: 0,
+      disponible: true,
     });
   };
 
@@ -40,11 +44,24 @@ const ProductForm = ({ onAddProduct }) => {
       <h2>{'Agregar Producto'}</h2>
 
       <div className="form-group">
-        <label>Descripción:</label>
+        <label>Nombre:</label>
         <input
           type="text"
-          name="descripcion"
-          value={product.descripcion}
+          name="nombre"
+          placeholder='Ingrese nombre del producto...'
+          value={product.nombre}
+          onChange={handleChange}
+          required
+        />
+      </div>
+
+      <div className="form-group">
+        <label>Marca:</label>
+        <input
+          type="text"
+          name="marca"
+          placeholder='Ingrese marca del producto...'
+          value={product.marca}
           onChange={handleChange}
           required
         />

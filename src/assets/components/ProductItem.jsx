@@ -1,8 +1,9 @@
 
 const ProductItem = ({ product }) => {
   return (
-    <tr idP={product.id}>
-      <td>{product.descripcion}</td>
+    <tr>
+      <td>{product.nombre}</td>
+      <td>{product.marca}</td>
       <td>${product.precioUnitario.toFixed(2)}</td>
       <td>{product.descuento}%</td>
       <td>${product.precioConDescuento?.toFixed(2)}</td>

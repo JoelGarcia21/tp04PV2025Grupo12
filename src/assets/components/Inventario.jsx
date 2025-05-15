@@ -15,47 +15,60 @@ function Inventario() {
   useEffect(() => {
     const productosIniciales = [
       {
-        descripcion: "Teclado mecánico",
+        id: 1,
+        nombre: "Teclado mecánico",
+        marca: "Nord",
         precioUnitario: 58000,
         descuento: 10,
         stock: 15,
-        precioConDescuento: 52200
+        disponible: true,
       },
       {
-        descripcion: "Mouse inalámbrico",
+        id: 2,
+        nombre: "Mouse inalámbrico",
+        marca: "Logitech",
         precioUnitario: 9590,
         descuento: 5,
         stock: 20,
-        precioConDescuento: 9110.5
+        disponible: true,
       },
       {
-        descripcion: "Monitor 24 pulgadas",
+        id: 3,
+        nombre: "Monitor 24 pulgadas",
+        marca: "LG",
         precioUnitario: 279000,
         descuento: 15,
         stock: 7,
-        precioConDescuento: 237150
+        disponible: true,
       },
       {
-        descripcion: "Auriculares Bluetooth",
+        id: 4,
+        nombre: "Auriculares Bluetooth",
+        marca: "sony",
         precioUnitario: 20000,
         descuento: 8,
         stock: 25,
-        precioConDescuento: 18400
+        disponible: false,
       },
       {
-        descripcion: "Webcam HD",
+        id: 5,
+        nombre: "Webcam HD",
+        marca: "razer",
         precioUnitario: 35900,
         descuento: 12,
         stock: 12,
-        precioConDescuento: 31592
+        disponible: true,
       }
     ].map(producto => ({
       ...producto,
-      id: Date.now()
+      precioConDescuento: producto.precioUnitario * (1 - producto.descuento / 100)
     }));
     setProducts(productosIniciales);
+    setFilteredProducts(productosIniciales.filter(p => p.disponible));
+    
   }, []);
-
+   console.clear();
+   console.log(products)
   return (
     <div className="list-container">
       <h1>Gestion de Productos</h1>

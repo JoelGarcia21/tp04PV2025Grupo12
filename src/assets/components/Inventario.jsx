@@ -7,11 +7,19 @@ import SearchBar from './SearchBar.jsx';
 function Inventario() {
   const [products, setProducts] = useState([]);
   const [filteredProducts, setFilteredProducts] = useState([]);
+  const [productToEdit, setProductToEdit] = useState(null);
   
   const addProduct = (newProduct) => {
     setProducts([...products, { ...newProduct, id: Date.now() }]);
   };
 
+  const updateProduct = (updated) => {
+    setProducts(products.map(p => p.id === updated.id ? updated : p));
+    setProductToEdit(null); // Salir del modo edición
+  };
+  const handleEdit = (product) => {
+    setProductToEdit(product);
+  };
   useEffect(() => {
     const productosIniciales = [
       {
@@ -64,23 +72,27 @@ function Inventario() {
       precioConDescuento: producto.precioUnitario * (1 - producto.descuento / 100)
     }));
     setProducts(productosIniciales);
-    setFilteredProducts(productosIniciales.filter(p => p.disponible));
+    // setFilteredProducts(productosIniciales.filter(p => p.disponible));
     
   }, []);
-   console.clear();
-   console.log(products)
+  //  console.clear();
+  //  console.log(products)
   return (
     <div className="list-container">
       <h1>Gestion de Productos</h1>
       <ProductForm
         onAddProduct={addProduct}
+        onUpdateProduct={updateProduct}
+        productToEdit={productToEdit}
+        cancelEdit={setProductToEdit}
       />
       <SearchBar
         allProducts={products}
         onResults={setFilteredProducts}
       />
       <ProductList
-        products={filteredProducts}        
+        products={filteredProducts.length?filteredProducts:products}//si los productos filtrados tiene productos se muestra esa lista
+        onEdit={handleEdit}  
         // products={products} // codigo anterior
       />
     </div>

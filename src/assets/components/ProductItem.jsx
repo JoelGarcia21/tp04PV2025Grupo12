@@ -1,5 +1,5 @@
 
-const ProductItem = ({ product }) => {
+const ProductItem = ({ product, onEdit }) => {
   return (
     <tr>
       <td>{product.nombre}</td>
@@ -9,7 +9,7 @@ const ProductItem = ({ product }) => {
       <td>${product.precioConDescuento?.toFixed(2)}</td>
       <td>{product.stock}</td>
       <td>
-        <button>Editar</button>
+        <button onClick={() => onEdit(product)}>Editar</button>
         <button>Eliminar</button>
       </td>
     </tr>

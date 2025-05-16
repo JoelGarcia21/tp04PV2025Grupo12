@@ -5,23 +5,30 @@ const SearchBar = ({ allProducts, onResults }) =>{
 
     //Memoriza el resultado de la función de filtrado, evitando que se recalculen los productos filtrados en cada render
     const filtrado = useMemo(() => {
-        const consulta = search.toLowerCase();
-        if (!consulta) return allProducts;// Si el campo de búsqueda está vacío, se devuelven todos los productos sin filtrar
+
+        const consulta = search.trim().toLowerCase();// Trim() para borrar espacios vacios
+        if (!consulta) return [];// Si el campo de búsqueda está vacío, se devuelve un array vacio
         return allProducts.filter(product =>
-          product.descripcion.toLowerCase().includes(consulta) // falta que relalice la busqueda por ID, despues lo hago
+          product.nombre.toLowerCase().includes(consulta) ||
+          product.marca.toLowerCase().includes(consulta) ||
+          product.id.toString().includes(consulta)
         );
-      }, [search, allProducts]);// Se vuelve a ejecutar solo si 'search' o 'allProducts' cambian
+      }, [search]);// Se vuelve a ejecutar solo si 'search' cambian
 
     //Se activa cada vez que cambia el resultado filtrado o la función onResults
     useEffect(() => {
     //Llama a la función onResults pasándole los productos filtrados, para que el componente padre los reciba y actualice su vista
-        onResults(filtrado);
+      if (search.trim() === "") {
+        onResults([]); // Enviar array vacio para indicar que no hay filtro
+      } else {
+        onResults(filtrado); // Enviar resultados filtrados
+      }  
     }, [filtrado, onResults]);  
     return(
         <div className="search-bar">
             <input
             type="text"
-            placeholder="Buscar por ID o Descripción"
+            placeholder="Buscar por ID, Nombre o Marca"
             value={search}
             onChange={e => setSearch(e.target.value)}
       />

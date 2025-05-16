@@ -1,6 +1,7 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
+import BotoneraEdicion from './EditionButtons';
 
-const ProductForm = ({ onAddProduct }) => {
+const ProductForm = ({ onAddProduct, onUpdateProduct, productToEdit, cancelEdit }) => {
   const [product, setProduct] = useState({
     nombre: '',
     marca: '',
@@ -9,6 +10,12 @@ const ProductForm = ({ onAddProduct }) => {
     stock: 0,
     disponible: true,
   });
+  // si hay un producto para editar, se lo asigna a product para trabajar
+  useEffect(() => {
+    if (productToEdit) {
+      setProduct(productToEdit);
+    }
+  }, [productToEdit]);
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -26,7 +33,11 @@ const ProductForm = ({ onAddProduct }) => {
       ...product,
       precioConDescuento: product.precioUnitario * (1 - product.descuento / 100)
     };
-    onAddProduct(productWithDiscount);
+    if (productToEdit) {
+      onUpdateProduct(productWithDiscount);
+    } else {
+      onAddProduct(productWithDiscount);
+    }
 
     // Resetear formulario
     setProduct({
@@ -38,10 +49,21 @@ const ProductForm = ({ onAddProduct }) => {
       disponible: true,
     });
   };
-
+  //despues optimizar codigo para que no se repita con el de arriba
+  const cancelEditButton = () => {
+    setProduct({
+      nombre: '',
+      marca: '',
+      precioUnitario: 0,
+      descuento: 0,
+      stock: 0,
+      disponible: true,
+    });
+    cancelEdit(null);
+  }
   return (
     <form onSubmit={handleSubmit} className="list-form">
-      <h2>{'Agregar Producto'}</h2>
+      <h2>{productToEdit ? 'Editar Producto' : 'Agregar Producto'}</h2>
 
       <div className="form-group">
         <label>Nombre:</label>
@@ -104,7 +126,14 @@ const ProductForm = ({ onAddProduct }) => {
           required
         />
       </div>
-      <button type="submit">Agregar</button>
+      {productToEdit ? (
+        <BotoneraEdicion
+          onActualizar={handleSubmit}
+          onCancelar={cancelEditButton}
+        />
+      ) : (
+        <button type="submit">Agregar</button>
+      )}
     </form>
   );
 };

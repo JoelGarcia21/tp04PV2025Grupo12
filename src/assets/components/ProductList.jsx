@@ -1,11 +1,13 @@
 import ProductItem from "./ProductItem";
 
-const ProductList = ({ products }) => {
+const ProductList = ({ products, onEdit }) => {
 
+  //aca se filtran los productos para luego mostrar los disponibles
+  const productosDisponibles = products.filter(p=>p.disponible)
   return (
     <div className="product-list">
       <h2>Lista de Productos</h2>
-      {products.length === 0 ? (
+      {productosDisponibles.length === 0 ? (
         <p>No hay productos registrados</p>
       ) : (
         <table>
@@ -21,8 +23,8 @@ const ProductList = ({ products }) => {
             </tr>
           </thead>
           <tbody>
-            {products.map(product => (
-              <ProductItem key={product.id} product={product} />
+            {productosDisponibles.map(product => (
+              <ProductItem key={product.id} product={product} onEdit={onEdit} />
             ))}
           </tbody>
         </table>

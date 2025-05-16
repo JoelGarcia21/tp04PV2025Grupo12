@@ -5,10 +5,13 @@ const SearchBar = ({ allProducts, onResults }) =>{
 
     //Memoriza el resultado de la función de filtrado, evitando que se recalculen los productos filtrados en cada render
     const filtrado = useMemo(() => {
-        const consulta = search.toLowerCase();
+      
+        const consulta = search.trim().toLowerCase();// Trim() para borrar espacios vacios
         if (!consulta) return allProducts;// Si el campo de búsqueda está vacío, se devuelven todos los productos sin filtrar
         return allProducts.filter(product =>
-          product.descripcion.toLowerCase().includes(consulta) // falta que relalice la busqueda por ID, despues lo hago
+          product.nombre.toLowerCase().includes(consulta) ||
+          product.marca.toLowerCase().includes(consulta) ||
+          product.id.toString().includes(consulta)
         );
       }, [search, allProducts]);// Se vuelve a ejecutar solo si 'search' o 'allProducts' cambian
 

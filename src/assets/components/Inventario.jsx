@@ -23,6 +23,14 @@ function Inventario() {
     );
   }, []); 
 
+  const restoreProducts = useCallback(() => {
+  setProducts(prevProducts => 
+    prevProducts.map(product => 
+      !product.disponible ? { ...product, disponible: true } : product
+    )
+  );
+}, []);
+
   const updateProduct = (updated) => {
     setProducts(products.map(p => p.id === updated.id ? updated : p));
     setProductToEdit(null); // Salir del modo edición
@@ -104,6 +112,7 @@ function Inventario() {
         products={filteredProducts.length?filteredProducts:products}//si los productos filtrados tiene productos se muestra esa lista
         onEdit={handleEdit}  
         onDelete={deleteProduct} 
+        onRestore={restoreProducts}
         // products={products} // codigo anterior
       />
     </div>

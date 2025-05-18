@@ -1,12 +1,24 @@
 import ProductItem from "./ProductItem";
 
-const ProductList = ({ products, onEdit, onDelete }) => {
+const ProductList = ({ products, onEdit, onDelete, onRestore }) => {
 
-  //aca se filtran los productos para luego mostrar los disponibles
-  const productosDisponibles = products.filter(p=>p.disponible)
+  //Aqui se filtran los productos para luego mostrar los disponibles
+  const productosDisponibles = products.filter(p=>p.disponible);
+  //Se detiene en cuanto encuentra el primer producto con disponible=false.
+  const hayProductosNoDisponibles = products.some(p => !p.disponible);
   return (
     <div className="product-list">
-      <h2>Lista de Productos</h2>
+      <div className="list-header">
+        <h2>Lista de Productos</h2>
+        {hayProductosNoDisponibles && (
+          <button 
+            onClick={onRestore}
+            className="restore-btn"
+          >
+            Restaurar Productos
+          </button>
+        )}
+      </div>
       {productosDisponibles.length === 0 ? (
         <p>No hay productos registrados</p>
       ) : (

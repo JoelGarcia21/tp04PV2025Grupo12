@@ -1,5 +1,4 @@
-
-const ProductItem = ({ product, onEdit }) => {
+const ProductItem = ({ product, onEdit, onDelete }) => {
   return (
     <tr>
       <td>{product.nombre}</td>
@@ -10,7 +9,7 @@ const ProductItem = ({ product, onEdit }) => {
       <td>{product.stock}</td>
       <td>
         <button onClick={() => onEdit(product)}>Editar</button>
-        <button>Eliminar</button>
+        <button onClick={() => onDelete(product.id)}>Eliminar</button>
       </td>
     </tr>
   );

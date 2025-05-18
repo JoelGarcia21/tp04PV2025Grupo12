@@ -1,4 +1,4 @@
-import {useState, useEffect} from 'react';
+import {useState, useEffect, useCallback} from 'react';
 import ProductForm from './ProductForm.jsx';
 import ProductList from './ProductList';
 import '../styles/intentario-style.css';
@@ -12,6 +12,16 @@ function Inventario() {
   const addProduct = (newProduct) => {
     setProducts([...products, { ...newProduct, id: Date.now() }]);
   };
+  
+  const deleteProduct = useCallback((productId) => {
+    setProducts(prevProducts =>
+      prevProducts.map(product =>
+        product.id === productId 
+          ? { ...product, disponible: false } 
+          : product
+      )
+    );
+  }, []); 
 
   const updateProduct = (updated) => {
     setProducts(products.map(p => p.id === updated.id ? updated : p));
@@ -56,7 +66,7 @@ function Inventario() {
         precioUnitario: 20000,
         descuento: 8,
         stock: 25,
-        disponible: false,
+        disponible: true,
       },
       {
         id: 5,
@@ -72,11 +82,11 @@ function Inventario() {
       precioConDescuento: producto.precioUnitario * (1 - producto.descuento / 100)
     }));
     setProducts(productosIniciales);
-    // setFilteredProducts(productosIniciales.filter(p => p.disponible));
+    
     
   }, []);
-  //  console.clear();
-  //  console.log(products)
+    console.clear();
+    console.log(products)
   return (
     <div className="list-container">
       <h1>Gestion de Productos</h1>
@@ -93,6 +103,7 @@ function Inventario() {
       <ProductList
         products={filteredProducts.length?filteredProducts:products}//si los productos filtrados tiene productos se muestra esa lista
         onEdit={handleEdit}  
+        onDelete={deleteProduct} 
         // products={products} // codigo anterior
       />
     </div>

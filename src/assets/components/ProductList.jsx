@@ -1,6 +1,6 @@
 import ProductItem from "./ProductItem";
 
-const ProductList = ({ products, onEdit }) => {
+const ProductList = ({ products, onEdit, onDelete }) => {
 
   //aca se filtran los productos para luego mostrar los disponibles
   const productosDisponibles = products.filter(p=>p.disponible)
@@ -24,7 +24,7 @@ const ProductList = ({ products, onEdit }) => {
           </thead>
           <tbody>
             {productosDisponibles.map(product => (
-              <ProductItem key={product.id} product={product} onEdit={onEdit} />
+              <ProductItem key={product.id} product={product} onEdit={onEdit} onDelete={onDelete} />
             ))}
           </tbody>
         </table>

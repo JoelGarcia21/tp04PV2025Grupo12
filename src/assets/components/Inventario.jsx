@@ -109,11 +109,10 @@ function Inventario() {
         onResults={setFilteredProducts}
       />
       <ProductList
-        products={filteredProducts.length?filteredProducts:products}//si los productos filtrados tiene productos se muestra esa lista
+        products={filteredProducts!==null?filteredProducts:products}//si los productos filtrados no es null se muestra esa lista, sino se muestra la lista completa
         onEdit={handleEdit}  
         onDelete={deleteProduct} 
         onRestore={restoreProducts}
-        // products={products} // codigo anterior
       />
     </div>
   );

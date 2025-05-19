@@ -19,7 +19,7 @@ const SearchBar = ({ allProducts, onResults }) =>{
     useEffect(() => {
     //Llama a la función onResults pasándole los productos filtrados, para que el componente padre los reciba y actualice su vista
       if (search.trim() === "") {
-        onResults([]); // Enviar array vacio para indicar que no hay filtro
+        onResults(null); // Enviar null para indicar que no hay filtro
       } else {
         onResults(filtrado); // Enviar resultados filtrados
       }  

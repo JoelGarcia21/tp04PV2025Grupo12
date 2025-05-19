@@ -40,17 +40,13 @@ const ProductForm = ({ onAddProduct, onUpdateProduct, productToEdit, cancelEdit 
     }
 
     // Resetear formulario
-    setProduct({
-      nombre: '',
-      marca: '',
-      precioUnitario: 0,
-      descuento: 0,
-      stock: 0,
-      disponible: true,
-    });
+    resetForm();
   };
-  //despues optimizar codigo para que no se repita con el de arriba
   const cancelEditButton = () => {
+    resetForm();
+    cancelEdit(null);
+  }
+  const resetForm = () => {
     setProduct({
       nombre: '',
       marca: '',
@@ -59,7 +55,6 @@ const ProductForm = ({ onAddProduct, onUpdateProduct, productToEdit, cancelEdit 
       stock: 0,
       disponible: true,
     });
-    cancelEdit(null);
   }
   return (
     <form onSubmit={handleSubmit} className="list-form">

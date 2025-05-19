@@ -42,7 +42,6 @@ const ProductForm = ({ onAddProduct, onUpdateProduct, productToEdit, cancelEdit 
     // Resetear formulario
     resetForm();
   };
-  //despues optimizar codigo para que no se repita con el de arriba
   const cancelEditButton = () => {
     resetForm();
     cancelEdit(null);
